@@ -11,5 +11,5 @@
      '(magik-mode doom-themes modus-themes auto-complete multiple-cursors powershell marginalia vertico use-package)))
   
 
-  (load-file "~/my-own-lisp-files/init_28.el")
+  (load-file "~/.config/emacs/init_28.el")
   )
