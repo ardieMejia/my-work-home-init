@@ -202,7 +202,7 @@
 
 
 (run-at-time nil (* 5 60) 'recentf-save-list)
-(run-at-time nil (* 5 600) 'my-org-sound-randomizer)
+(run-at-time nil (* 5 150) 'my-org-sound-randomizer)
 
  
 ;; ===== https://github.com/magnars/multiple-cursors.el
@@ -417,13 +417,7 @@ Version: 2020-11-20 2022-04-20 2022-08-19"
 
 
 
-(defun my-copy-directory ()
-  "get current directory into clipboard"
-  (interactive)
-  (kill-new default-directory)
-  )
 
-(global-set-key (kbd "C-c m , d") 'my-copy-directory)
 
 
 
@@ -528,6 +522,7 @@ Version: 2020-11-20 2022-04-20 2022-08-19"
 (add-hook 'org-mode-hook 'electric-pair-mode)
 (add-hook 'emacs-lisp-mode-hook 'electric-pair-mode)
 (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
+;;(add-hook 'focus-in-hook (lambda () (revert-buffer)))
 ;; DELETE ----- (add-hook 'org-mode-hook 'my-mode)
 
 
@@ -542,10 +537,8 @@ Version: 2020-11-20 2022-04-20 2022-08-19"
 
 
 
-
-
-
-
+;; ========== brute-force stop python
+(defun python-mode () t)
 
 
 

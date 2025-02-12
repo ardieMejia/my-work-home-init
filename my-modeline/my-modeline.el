@@ -58,5 +58,11 @@
 
 (add-hook 'powershell-mode-hook 'my-mode-line-generic-1)
 
+(add-hook 'mhtml-mode-hook 'my-mode-line-generic-1)
+
+(add-hook 'bat-mode-hook 'my-mode-line-generic-1)
+
+(add-hook 'java-mode-hook 'my-mode-line-generic-1)
+
 
 

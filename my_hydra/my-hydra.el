@@ -30,20 +30,53 @@
   ("s" my-open-work-diary "stuff_i_installed_at_work.org" :column "files" )
   ("t" my-open-transient-todo "my-open-transient-todo")
   ("i" my-open-init-28  "init_28.el")
-  ("d" my-open-daily-java "daily_java.org")
+  ("j" my-open-daily-java "daily_java.org")
   ("p" my-open-password "password")
   ("r" my-open-general-zoho "Zoho" :column "sites")
   ("w" my-open-word-convert "word convert from html")
   ("y" my-open-yammer "yammer")
   ("g" my-open-ge "ge")
-  ("b" (lambda () (interactive)
-	 (switch-to-buffer (other-buffer))
-	 ) "open last visited buffer" :column "navigation")
-  ("x" read-only-mode "read-only-mode") 
   ("l" my-open-alteia-docs :column "alteia docs")
   ("a" my-open-alteia :column "alteia")
-  ("m" my-run-macro :column "run macro")
   ("." my-c-hydra/body :column "copy hydras")
+  ("x" read-only-mode "read-only-mode")     
+  )
+
+
+(defhydra my-b-hydra
+  (:color blue)
+  "buffer hydra"
+  ("q" nil "quit")
+  (";" nil "quit")
+  ("b" (progn
+	 (switch-to-buffer (other-buffer))
+	 (my-b-hydra/body)
+	 )   
+   "open last visited buffer" :column "navigation")
+   ;; read only doesnt work properly,  not sure why it works for the original code
+  ;; ("x" (progn
+  ;; 	 (read-only-mode buffer-file-name)
+  ;; 	 (my-b-hydra/body))
+  ;; 	 "read-only-mode"
+  ;; 	 )
+  ("k" (kill-buffer)
+   "kill buffer")
+  ("h" (progn
+	 (mark-whole-buffer)
+	 (my-b-hydra/body))
+   "mark whole buffer"
+   )
+  ("w" (progn
+	 (kill-ring-save (region-beginning) (region-end))
+	 (my-b-hydra/body))
+   "mark whole buffer")
+  ("y" (progn
+	 (yank)
+	 (my-b-hydra/body))
+   "yank")
+  ;; TODO: this doesnt work with progn
+  ("x" read-only-mode "read-only-mode")
+  ("0" delete-window "delete current window")
   )
 
 
@@ -68,16 +101,52 @@
 	 (my-s-hydra/body)
 	 )
    "select line forward" :column "line")
+    ("u" (progn
+	 (my-unmark-line)
+	 (my-s-hydra/body)
+	 )
+   "unselect line back")
    ("w" (progn
 	  (kill-ring-save (region-beginning) (region-end))
 	  nil
 	  )
     "save to ring")
+
+   ("y" 
+    (if mark-active
+	(progn
+	  (if buffer-read-only
+	      (read-only-mode -1)
+	    nil
+	    )
+	  (kill-ring-save (region-beginning) (region-end))
+	  (move-end-of-line 1)
+	  (newline)
+	  (yank)
+	  ))
+    "duplicate into after reg")
+
+     
+
    ("k" (progn
+	  (if buffer-read-only
+	      (read-only-mode -1)
+	    nil
+	      )
 	  (kill-region (region-beginning) (region-end))
+	  (kill-line)
 	  nil
 	  )
     "kill")
+   ("c" ;; (comment-region (region-beginning) (region-end))
+    (progn
+      (if buffer-read-only
+	  (read-only-mode -1)
+	nil
+	)
+      (comment-dwim nil)
+      nil)
+    "comment")
    ("q" 
     (progn (pop-mark)
 	   nil)
@@ -105,6 +174,18 @@
 	      ;; (kbd "C-c ;")
 	      (kbd "; ;")
 	      'my-fh-hydra/body) map))
+
+(define-minor-mode my-b-mode
+  "A minor mode so that my key settings override annoying major modes."
+  ;; If init-value is not set to t, this mode does not get enabled in
+  ;; `fundamental-mode' buffers even after doing \"(global-my-mode 1)\".
+  ;; More info: http://emacs.stackexchange.com/q/16693/115
+  :init-value t
+  :lighter " my-b"
+  :keymap (let ((map (make-sparse-keymap)))
+	    (define-key map
+	      (kbd "; b")
+	      'my-b-hydra/body) map))
 
 
 

@@ -113,6 +113,14 @@
       (set-mark (point))
       (move-end-of-line 1))))
 
+(defun my-unmark-line ()
+  (interactive)
+  (if mark-active
+      (progn
+	(previous-line)      
+	(move-end-of-line 1)))
+  )
+
 
 
 (global-set-key (kbd "C-c l") 'my-mark-line)
@@ -202,10 +210,17 @@
 (global-set-key (kbd "C-c m o t") 'my-open-teams)
 
 
+;; ;; ========== annoying GE Documentation ==========
+;; (defun my-open-ge ()
+;;   (interactive)
+;;   (org-open-link-from-string "https://smallworld.gedigitalenergy.com/documentation"))
+
+;; (global-set-key (kbd "C-c m o g") 'my-open-ge)
+
 ;; ========== annoying GE Documentation ==========
 (defun my-open-ge ()
   (interactive)
-  (org-open-link-from-string "https://smallworld.gedigitalenergy.com/documentation"))
+  (org-open-link-from-string "https://smallworld-gnm.gevernova.com/documentation/"))
 
 (global-set-key (kbd "C-c m o g") 'my-open-ge)
 
@@ -548,9 +563,9 @@ URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'"
     (set-face-attribute (car face) nil :font "Arial" :weight 'medium :height (cdr face)))
   
   ;; ----- becoz we cant decide what we need for org-mode, our org is still ugly
-  (set-face-attribute 'org-level-1 nil :font "Georgia" :weight 'medium :height 1.7 :foreground "LemonChiffon4")
-  (set-face-attribute 'org-level-2 nil :font "Georgia" :weight 'medium :height 1.4)
-  (set-face-attribute 'org-level-3 nil :font "Georgia" :weight 'medium :height 1.2)
+  (set-face-attribute 'org-level-1 nil :font "Georgia" :weight 'medium :height 1.8 :foreground "LemonChiffon4")
+  (set-face-attribute 'org-level-2 nil :font "Garamond" :weight 'medium :height 1.4)
+  (set-face-attribute 'org-level-3 nil :font "Georgia" :weight 'medium :height 1.3)
   (set-face-attribute 'org-level-4 nil :font "Georgia" :weight 'medium :height 1.2)
   
   (set-frame-parameter (selected-frame) 'internal-border-width 0)
@@ -585,9 +600,9 @@ URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'"
     (set-face-attribute (car face) nil :font "Jost" :weight 'medium :height (cdr face)))
   
   ;; ----- becoz we cant decide what we need for org-mode, our org is still ugly
-  (set-face-attribute 'org-level-1 nil :font "Agency FB" :weight 'medium :height 2.2 :foreground "VioletRed4")
-  (set-face-attribute 'org-level-2 nil :font "Agency FB" :weight 'medium :height 1.4 :foreground "DodgerBlue1")
-  (set-face-attribute 'org-level-3 nil :font "Garamond" :weight 'medium :height 1.3 :foreground "VioletRed4")
+  (set-face-attribute 'org-level-1 nil :font "Agency FB" :weight 'medium :height 2.3 :foreground "VioletRed4")
+  (set-face-attribute 'org-level-2 nil :font "Agency FB" :weight 'medium :height 1.5 :foreground "DodgerBlue1")
+  (set-face-attribute 'org-level-3 nil :font "Garamond" :weight 'medium :height 1.4 :foreground "VioletRed4")
   (set-face-attribute 'org-level-4 nil :font "Arial" :weight 'medium :height 1.1  :foreground "DodgerBlue1")
   
   (set-frame-parameter (selected-frame) 'internal-border-width 0)
